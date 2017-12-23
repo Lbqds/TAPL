@@ -1,1 +1,5 @@
-type and programming language exercise
+### Current
+untyped arithmetic expression
+
+### Next
+untyped lambda-calculus
