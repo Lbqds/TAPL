@@ -65,4 +65,12 @@ class ArithSpec extends WordSpec {
       }
     }
   }
+
+  "TermPred t1" when {
+    "t1 = TermZero" should {
+      "be PredZero runtime exception" in {
+        assertThrows[PredZero.type](eval(TermPred(TermZero)))
+      }
+    }
+  }
 }
