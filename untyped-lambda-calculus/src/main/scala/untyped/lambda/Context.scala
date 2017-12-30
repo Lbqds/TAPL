@@ -4,9 +4,9 @@ import scala.collection.immutable
 import scala.util.control.Breaks.{breakable, break}
 import Context._
 
-class Context(val ctx: immutable.ListMap[String, Binding]) extends {
+class Context(val ctx: immutable.List[(String, Binding)]) extends {
   def length = ctx.size
-  def add(name: String, bind: Binding) = Context(ctx + (name -> bind))
+  def add(name: String, bind: Binding) = Context((name -> bind) +: ctx)
   // get de bruijn index
   def indexOf(name: String): Int = {
     var index = 0
@@ -28,6 +28,6 @@ object Context {
   trait Binding
   object NameBind extends Binding
 
-  def apply(ctx: immutable.ListMap[String, Binding]) = new Context(ctx)
-  val EmptyContext = Context(immutable.ListMap.empty)
+  def apply(ctx: immutable.List[(String, Binding)]) = new Context(ctx)
+  val EmptyContext = Context(immutable.List.empty)
 }
