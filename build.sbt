@@ -1,4 +1,4 @@
-lazy val projects: Seq[ProjectReference] = Seq(arith)
+lazy val projects: Seq[ProjectReference] = Seq(arith, untypedLambdaCalculus)
 
 lazy val commonSettings = Seq(
   version := "0.1",
@@ -15,6 +15,11 @@ lazy val root = Project(
 
 lazy val arith = module("arith")
   .settings(name := "arith")
+  .settings(commonSettings)
+  .settings(Dependencies.test)
+
+lazy val untypedLambdaCalculus = module("untyped-lambda-calculus")
+  .settings(name := "untyped-lambda-calculus")
   .settings(commonSettings)
   .settings(Dependencies.test)
 
