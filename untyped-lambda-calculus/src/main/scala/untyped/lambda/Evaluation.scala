@@ -1,7 +1,5 @@
 package untyped.lambda
 
-import scala.annotation.tailrec
-
 object Evaluation {
   object TermVarRefInEvalPhase extends RuntimeException
   object NoRuleApplied extends Exception
@@ -39,7 +37,7 @@ object Evaluation {
           if (j + c == index) termShift(c, s)
           else v
         case TermAbs(name, expression) =>
-          TermAbs(name, walk(c + 1, t))
+          TermAbs(name, walk(c + 1, expression))
         case TermApp(t1, t2) =>
           TermApp(walk(c, t1), walk(c, t2))
         case TermVarRef(_) =>
@@ -67,13 +65,11 @@ object Evaluation {
     }
   }
 
-  @tailrec
   def eval(ctx: Context, t: Term): Term = {
     try {
       eval(ctx, eval1(ctx, t))
     } catch {
       case NoRuleApplied => t
-      case e => throw e
     }
   }
 }

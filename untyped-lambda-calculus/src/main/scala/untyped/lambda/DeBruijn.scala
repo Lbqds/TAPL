@@ -1,7 +1,7 @@
 package untyped.lambda
 
 object DeBruijn {
-  def deBruign(term: Term, ctx: Context): Term = {
+  def deBruijn(term: Term, ctx: Context): Term = {
     import Context._
     term match {
       case TermVarRef(name) =>
@@ -10,9 +10,9 @@ object DeBruijn {
         TermVar(index, ctx.length)
       case v @ TermVar(_, _) => v
       case TermAbs(name, expression) =>
-        TermAbs(name, deBruign(expression, ctx.add(name, NameBind)))
+        TermAbs(name, deBruijn(expression, ctx.add(name, NameBind)))
       case TermApp(t1, t2) =>
-        TermApp(deBruign(t1, ctx), deBruign(t2, ctx))
+        TermApp(deBruijn(t1, ctx), deBruijn(t2, ctx))
     }
   }
 }
