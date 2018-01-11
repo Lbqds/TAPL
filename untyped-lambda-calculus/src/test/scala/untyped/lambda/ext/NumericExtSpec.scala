@@ -10,11 +10,35 @@ import untyped.lambda._
 /// TermZero.
 class NumericExtSpec extends WordSpec {
   "succ n" when {
-    "n = zero" should {
-      "be first" in {
+    "n = 0" should {
+      "be 1" in {
         val first = TermSucc(TermZero)
         val result = NumericExt.succ(NumericExt.Zero)
         assert(NumericExt.toSuccExpr(result).equalWith(first))
+      }
+    }
+  }
+
+  "plus m n" when {
+    "m = 1, n = 2" should {
+      "be 3" in {
+        val m = NumericExt.succ(NumericExt.Zero)
+        val n = NumericExt.succ(m)
+        val sum = NumericExt.plus(m, n)
+        val three = TermSucc(TermSucc(TermSucc(TermZero)))
+        assert(NumericExt.toSuccExpr(sum).equalWith(three))
+      }
+    }
+  }
+
+  "time m n" when {
+    "m = 2, n = 2" should {
+      "be 4" in {
+        val one = NumericExt.succ(NumericExt.Zero)
+        val m = NumericExt.succ(one)
+        val four = TermSucc(TermSucc(TermSucc(TermSucc(TermZero))))
+        val product = NumericExt.time(m, m)
+        assert(NumericExt.toSuccExpr(product).equalWith(four))
       }
     }
   }
