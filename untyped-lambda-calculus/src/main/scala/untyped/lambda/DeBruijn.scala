@@ -13,6 +13,8 @@ object DeBruijn {
         TermAbs(name, deBruijn(expression, ctx.add(name, NameBind)))
       case TermApp(t1, t2) =>
         TermApp(deBruijn(t1, ctx), deBruijn(t2, ctx))
+      case TermZero => TermZero
+      case TermSucc(t) => TermSucc(deBruijn(t, ctx))
     }
   }
 }

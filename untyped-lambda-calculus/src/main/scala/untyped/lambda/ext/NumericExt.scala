@@ -12,4 +12,11 @@ object NumericExt {
     val deBruijnTerm = DeBruijn.deBruijn(t, Context.EmptyContext)
     Evaluation.eval(Context.EmptyContext, deBruijnTerm)
   }
+
+  def toSuccExpr(n: Term): Term = {
+    val succ = TermAbs("z", TermSucc(TermVarRef("z")))
+    val term = TermApp(TermApp(n, succ), TermZero)
+    val deBruijnTerm = DeBruijn.deBruijn(term, Context.EmptyContext)
+    Evaluation.eval(Context.EmptyContext, deBruijnTerm)
+  }
 }

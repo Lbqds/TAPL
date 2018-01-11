@@ -10,3 +10,10 @@ case class TermAbs(arg: String, expression: Term) extends Term
 case class TermApp(t1: Term, t2: Term) extends Term
 // will be convert to TermVar in de bruijn phase
 case class TermVarRef(name: String) extends Term
+
+/**
+  * TermZero and TermSucc used for trigger inner TermApp,
+  * please refer to [[untyped.lambda.ext.NumericExtSpec]]
+  */
+case object TermZero extends Term
+case class TermSucc(t: Term) extends Term

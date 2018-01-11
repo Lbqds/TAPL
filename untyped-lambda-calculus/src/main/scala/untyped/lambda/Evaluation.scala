@@ -7,6 +7,8 @@ object Evaluation {
   def isVal(_ctx: Context, term: Term): Boolean = {
     term match {
       case TermAbs(_, _) => true
+      case TermZero => true
+      case TermSucc(t) => isVal(_ctx, t)
       case _ => false
     }
   }
@@ -21,6 +23,9 @@ object Evaluation {
           TermAbs(name, walk(c + 1, expression))
         case TermApp(t1, t2) =>
           TermApp(walk(c, t1), walk(c, t2))
+        case TermZero => TermZero
+        case TermSucc(t1) =>
+          TermSucc(walk(c, t1))
         case TermVarRef(_) =>
           // TermVarRef be convert to TermVar in de brujin phase
           throw TermVarRefInEvalPhase
@@ -40,6 +45,9 @@ object Evaluation {
           TermAbs(name, walk(c + 1, expression))
         case TermApp(t1, t2) =>
           TermApp(walk(c, t1), walk(c, t2))
+        case TermZero => TermZero
+        case TermSucc(t1) =>
+          TermSucc(walk(c, t1))
         case TermVarRef(_) =>
           // TermVarRef be convert to TermVar in de brujin phase
           throw TermVarRefInEvalPhase
@@ -60,6 +68,11 @@ object Evaluation {
         TermApp(v1, eval1(ctx, t2))
       case TermApp(t1, t2) =>
         TermApp(eval1(ctx, t1), t2)
+      case TermSucc(t1) if isVal(ctx, t1) =>
+        throw NoRuleApplied
+      case TermSucc(t1) =>
+        TermSucc(eval1(ctx, t1))
+      case TermZero => TermZero
       case _ =>
         throw NoRuleApplied
     }
