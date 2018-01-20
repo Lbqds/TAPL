@@ -26,4 +26,12 @@ class BooleanExtSpec extends WordSpec {
       }
     }
   }
+
+  "if p a else b" when {
+    "p = true, a = true, b = false" should {
+      "be true" in {
+        assert(BooleanExt.ifElse(BooleanExt.TermTrue, BooleanExt.TermTrue, BooleanExt.TermFalse).equalWith(BooleanExt.TermTrue))
+      }
+    }
+  }
 }
